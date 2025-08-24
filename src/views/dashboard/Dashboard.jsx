@@ -195,10 +195,7 @@ function Dashboard() {
                                             <React.Fragment key={c.id || index}>
                                                 <div className="col-12">
                                                     <div className="d-flex align-items-center position-relative">
-                                                        <div className="avatar avatar-lg flex-shrink-0">
-                                                            <img className="avatar-img" src={c?.image || "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"} style={{ width: "100px", height: "100px", objectFit: "cover", borderRadius: "50%" }} alt="avatar" />
-                                                        </div>
-                                                        <div className="me-3">
+                                                        <div className="ms-3">
                                                             <p className="mb-1">
                                                                 {" "}
                                                                 <Link to="/comments/" className="h6 stretched-link text-decoration-none text-dark">
@@ -213,6 +210,9 @@ function Dashboard() {
                                                                     {c?.message && <span className="text-warning fw-bold"> (پیام تماس) </span>}
                                                                 </p>
                                                             </div>
+                                                        </div>
+                                                        <div className="avatar avatar-lg flex-shrink-0">
+                                                            <img className="avatar-img" src={c?.image || "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"} style={{ width: "100px", height: "100px", objectFit: "cover", borderRadius: "50%" }} alt="avatar" />
                                                         </div>
                                                     </div>
                                                 </div>
