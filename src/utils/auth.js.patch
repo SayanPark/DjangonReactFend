@@ -1,0 +1,40 @@
+// Setting access and refresh tokens in cookies with expiration dates
+    Cookies.set("access_token", access_token, {
+        expires: 1, // Access token expires in 1 day
+    });
+
+    Cookies.set("refresh_token", refresh_token, {
+        expires: 7, // Refresh token expires in 7 days
+    });
+
+    // Decoding access token to get user information
+    const user = jwtDecode(access_token) ?? null;
+
+    // If user information is present, update user state; otherwise, set loading state to false
+    if (user) {
+        useAuthStore.getState().setUser(user);
+    }
+    useAuthStore.getState().setLoading(false);
+};
+=======
+export const setAuthUser = (access_token, refresh_token) => {
+    // Setting access and refresh tokens in cookies with expiration dates and path '/'
+    Cookies.set("access_token", access_token, {
+        expires: 1, // Access token expires in 1 day
+        path: "/", // Make cookie available on all routes
+    });
+
+    Cookies.set("refresh_token", refresh_token, {
+        expires: 7, // Refresh token expires in 7 days
+        path: "/", // Make cookie available on all routes
+    });
+
+    // Decoding access token to get user information
+    const user = jwtDecode(access_token) ?? null;
+
+    // If user information is present, update user state; otherwise, set loading state to false
+    if (user) {
+        useAuthStore.getState().setUser(user);
+    }
+    useAuthStore.getState().setLoading(false);
+};

@@ -1,0 +1,66 @@
+.two-column-dropdown {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem 1rem;
+  max-width: 400px;
+}
+
+.two-column-dropdown .dropdown-item {
+  white-space: normal;
+}
+
+/* Media query for screen width between 992px and 1199px */
+@media (min-width: 992px) and (max-width: 1199px) {
+  /* Reduce font size for nav links */
+  .navbar-nav .nav-link {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.5rem;
+  }
+
+  /* Reduce font size and padding for dropdown items */
+  .dropdown-menu .dropdown-item {
+    font-size: 0.85rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  /* Reduce size of buttons in header */
+  .btn {
+    font-size: 0.85rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  /* Reduce size of form input */
+  form.rounded.position-relative input.form-control {
+    font-size: 0.85rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  /* Reduce size of search button icon */
+  form.rounded.position-relative button.btn i {
+    font-size: 1rem;
+  }
+
+  /* Reduce size of dashboard dropdown button */
+  #dashboardMenu {
+    font-size: 0.85rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  /* Reduce size of logout button */
+  .logout-button {
+    font-size: 0.85rem;
+    padding: 0.25rem 0.5rem !important;
+  }
+
+  /* Reduce margin and padding in nav items */
+  .nav-item {
+    margin: 0 0.2rem;
+    padding: 0.1rem 0.3rem;
+  }
+
+  /* Keep logo size unchanged */
+  .navbar-brand {
+    font-size: initial;
+    padding: initial;
+  }
+}

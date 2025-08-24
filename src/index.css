@@ -1,0 +1,127 @@
+.counter-section {
+    display: flex;
+    margin-top: 20px;
+    height: auto;
+    width: 100%;
+    margin-bottom: 0;
+    position: relative;
+    left: 25px;
+    justify-content: center;
+    align-items: center;
+    gap: 80px;
+  }
+  
+  .counter-section > div > div {
+    text-align: center;
+  }
+  
+  .main-image {
+    max-width: 50%;
+    height: auto;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .around-image {
+    position: absolute;
+    z-index: 1;
+    max-width: 20%;
+    height: auto;
+  }
+  
+  .around-image.image1 {
+    left: 0px;
+    top: 200px;
+    right: 325px;
+    bottom: 0px;
+  }
+  
+  .around-image.image2 {
+    top: 40px;
+    left: 0px;
+    bottom: 0px;
+    right: 90px;
+  }
+  
+  .around-image.image3 {
+    top: 100px;
+    left: 0px;
+    bottom: 0px;
+    right: 90px;
+    scale: 150%;
+  }
+  
+  .around-image.image4 {
+    top: 250px;
+    left: 0px;
+    bottom: 0px;
+    right: 320px;
+    scale: 150%;
+  }
+  
+  .custom-section-color {
+    background-color: #f3f3eb;
+  }
+  
+  .small-image {
+    max-width: 400px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .mt-7 {
+    margin-top: 7rem !important;
+  }
+  
+  .custom-bg-yellow {
+    background-color: #faf9f0;
+  }
+  
+  @media (max-width: 768px) {
+    .counter-section {
+      left: 10;
+      top: 10px;
+    }
+  
+    .around-image {
+      position: absolute;
+      z-index: 1;
+      max-width: 20%;
+      height: auto;
+    }
+    
+    .around-image.image1 {
+      left: 0px;
+      top: 150px;
+      right: 300px;
+      bottom: 0px;
+    }
+    
+    .around-image.image2 {
+      top: 40px;
+      left: 0px;
+      bottom: 0px;
+      right: 60px;
+    }
+    
+    .around-image.image3 {
+      top: 100px;
+      left: 0px;
+      bottom: 0px;
+      right: 90px;
+      scale: 150%;
+    }
+    
+    .around-image.image4 {
+      top: 200px;
+      left: 0px;
+      bottom: 0px;
+      right: 270px;
+    }
+    .mt-7 {
+      margin-top: 1rem !important;
+      margin-bottom: 1rem !important;
+    }
+  }
+  

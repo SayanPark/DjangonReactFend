@@ -1,0 +1,32 @@
+.category-image-container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  height: 200px;
+  margin: 0 auto;
+  border-bottom-left-radius: 3rem;
+  border-bottom-right-radius: 3rem;
+  overflow: hidden;
+}
+
+.category-image-responsive {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-bottom-left-radius: 3rem;
+  border-bottom-right-radius: 3rem;
+}
+
+.category-image-overlay {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.704), rgba(0, 0, 0, 0));
+  pointer-events: none;
+  border-bottom-left-radius: 3rem;
+  border-bottom-right-radius: 3rem;
+}

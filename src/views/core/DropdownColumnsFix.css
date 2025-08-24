@@ -1,0 +1,25 @@
+/* Style for dropdown-menu-columns to support grid layout */
+.dropdown-menu-columns {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.dropdown-menu.show.dropdown-menu-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.dropdown-menu-columns li {
+  padding: 0;
+  margin: 0;
+}
+
+@media (max-width: 575px) {
+  .dropdown-menu.show.dropdown-menu-columns {
+    grid-template-columns: 1fr;
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+}

@@ -1,0 +1,14 @@
+.post-title-container {
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.post-title-text {
+  display: inline-block;
+  white-space: nowrap;
+  transition: transform 5s linear;
+}
+
+.post-title-container:hover .post-title-text {
+  transform: translateX(calc(-100% + 18ch));
+}
