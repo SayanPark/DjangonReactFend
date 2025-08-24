@@ -7,5 +7,8 @@ cd frontend
 REM Build the frontend in production mode
 npm run build -- --mode production
 
+REM Navigate back to root directory
+cd ..
+
 REM Deploy to Liara
-npx gh-pages -d dist
+npx liara deploy --app shahrezananekarafarin --port 5173 --platform static --path frontend/dist --build-location iran
