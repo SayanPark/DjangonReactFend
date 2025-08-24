@@ -195,35 +195,25 @@ function Dashboard() {
                                             <React.Fragment key={c.id || index}>
                                                 <div className="col-12">
                                                     <div className="d-flex align-items-center position-relative">
-                                                        <Link to="/comments/" className="h6 stretched-link text-decoration-none text-dark">
-                                                            <div className="avatar avatar-lg flex-shrink-0">
-                                                                <img 
-                                                                    className="avatar-img" 
-                                                                    src={c?.image || "/K.webp"} 
-                                                                    style={{ width: "100px", height: "100px", objectFit: "cover", borderRadius: "50%" }} 
-                                                                    alt="avatar" 
-                                                                    onError={(e) => {
-                                                                        // If the image fails to load, fallback to default image
-                                                                        if (e.target.src !== "/K.webp") {
-                                                                            e.target.src = "/K.webp";
-                                                                        }
-                                                                    }}
-                                                                />
-                                                            </div>
-                                                            <div className="me-3">
-                                                                <p className="mb-1">                                           
+                                                        <div className="avatar avatar-lg flex-shrink-0">
+                                                            <img className="avatar-img" src={c?.image || "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"} style={{ width: "100px", height: "100px", objectFit: "cover", borderRadius: "50%" }} alt="avatar" />
+                                                        </div>
+                                                        <div className="me-3">
+                                                            <p className="mb-1">
+                                                                {" "}
+                                                                <Link to="/comments/" className="h6 stretched-link text-decoration-none text-dark">
                                                                     {" "}
                                                                     {c?.comment || c?.message}
+                                                                </Link>
+                                                            </p>
+                                                            <div className="d-flex justify-content-between">
+                                                                <p className="small mb-0">
+                                                                    <i className={c?.message ? "fa fa-envelope text-warning" : "bi bi-chat-left-quote-fill text-success"}></i>
+                                                                    <i className="me-1">توسط </i>{c?.name}
+                                                                    {c?.message && <span className="text-warning fw-bold"> (پیام تماس) </span>}
                                                                 </p>
-                                                                <div className="d-flex justify-content-between">
-                                                                    <p className="small mb-0">
-                                                                        <i className={c?.message ? "fa fa-envelope text-warning" : "bi bi-chat-left-quote-fill text-success"}></i>
-                                                                        <i className="me-1">توسط </i>{c?.name}
-                                                                        {c?.message && <span className="text-warning fw-bold"> (پیام تماس) </span>}
-                                                                    </p>
-                                                                </div>
                                                             </div>
-                                                        </Link>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <hr className="my-3" />
