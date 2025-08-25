@@ -158,6 +158,15 @@ function Comments() {
                                                                 </span>
                                                                 {c?.comment || c?.message}              
                                                             </p>
+                                                            {c?.post && !c?.message && (
+                                                                <p className="mt-1" style={{ fontWeight: (seenComments[c.id] || c?.reply || (c?.message && (c?.responded || repliedContactMessages[c.id]))) ? "normal" : "bold", color: "#555" }}>
+                                                                    <i className="bi bi-file-earmark-text me-1"></i>
+                                                                    در پست: 
+                                                                    <a href={`/post/${c?.post?.slug}`} className="text-decoration-none text-primary ms-1" target="_blank" rel="noopener noreferrer">
+                                                                        {c?.post?.title}
+                                                                    </a>
+                                                                </p>
+                                                            )}
                                                             <hr/>
                                                             <p className="mt-2" style={{ fontWeight: (seenComments[c.id] || c?.reply || (c?.message && (c?.responded || repliedContactMessages[c.id]))) ? "normal" : "bold", color: (c?.message && (c?.responded || repliedContactMessages[c.id])) ? 'green' : (!c?.reply ? 'red' : 'inherit') }}>
                                                                 <span style={{ marginLeft: "0.5rem", color: (c?.message && (c?.responded || repliedContactMessages[c.id])) ? 'green' : 'inherit' }}>

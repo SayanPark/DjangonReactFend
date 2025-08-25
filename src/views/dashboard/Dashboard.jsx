@@ -214,6 +214,12 @@ function Dashboard() {
                                                                     {c?.comment || c?.message}
                                                                 </p>
                                                             </Link>
+                                                            {c?.post && !c?.message && (
+                                                                <p className="small mb-1 text-muted">
+                                                                    <i className="bi bi-file-earmark-text me-1"></i>
+                                                                    در پست: {c?.post?.title}
+                                                                </p>
+                                                            )}
                                                             <p className="small mb-0">
                                                                 <i className={c?.message ? "fa fa-envelope text-warning" : "bi bi-chat-left-quote-fill text-success"}></i>
                                                                 <i className="me-1">توسط </i>{c?.name}
