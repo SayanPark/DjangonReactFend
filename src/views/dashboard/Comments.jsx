@@ -6,22 +6,64 @@ import Moment from "../../plugin/Moment";
 
 // Assuming Bootstrap JS is globally available as 'bootstrap'
 function Comments() {
-    const [comments, setComment] = useState([]);
-    const [seenComments, setSeenComments] = useState({}); // track seen comments by id
-    const [repliedContactMessages, setRepliedContactMessages] = useState({}); // track replied contact messages by id
-    const userData = useUserData();
-    const user_id = userData?.user_id;
-    const canDeleteComment = userData?.is_staff || userData?.can_delete_comment || false;
+    const [comments, setComment] = useState([])
+    const [reply, setReply] = useState({}) // changed to object to hold reply per comment
+    const [seenComments, setSeenComments] = useState({}) // track seen comments by id
+    const [repliedContactMessages, setRepliedContactMessages] = useState({}) // track replied contact messages by id
+    const userData = useUserData()
+    const user_id = userData?.user_id
+    const canDeleteComment = userData?.is_staff || userData?.can_delete_comment || false
 
     const fetchComments = async () => {
-        const comment_res = await apiInstance.get(`author/dashboard/comment-list/${user_id}/`);
-        const contact_res = await apiInstance.get(`contact-message/list/`);
+        const comment_res = await apiInstance.get(`author/dashboard/comment-list/${user_id}/`)
+        const contact_res = await apiInstance.get(`contact-message/list/`)
         // Combine comments and contact messages
-        const allComments = [...comment_res?.data, ...contact_res?.data];
+        const allComments = [...comment_res?.data, ...contact_res?.data]
         // Sort comments by date descending (newest first)
-        const sortedComments = allComments?.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
-        setComment(sortedComments);
-    };
+        const sortedComments = allComments?.slice().sort((a, b) => new Date(b.date) - new Date(a.date))
+        setComment(sortedComments)
+    }
+
+    const handleReplyChange = (commentId, value) => {
+        setReply(prev => ({ ...prev, [commentId]: value }))
+    }
+
+    const handleSubmitReply = async (commentId) => {
+        try {
+            const comment = comments.find(c => c.id === commentId);
+            let response;
+            if (comment?.message) {
+                // Send reply to contact message using backend contact-message/reply/ endpoint
+                response = await apiInstance.post(`contact-message/reply/`, {
+                    contact_message_id: comment.id,
+                    response: reply[commentId] || "",
+                })
+            setRepliedContactMessages(prev => ({ ...prev, [commentId]: true })) // mark as replied immediately
+        } else {
+            // Reply logic for normal comments
+            response = await apiInstance.post(`author/dashboard/reply-comment/`, {
+                comment_id: commentId,
+                reply: reply[commentId] || "",
+            })
+        }
+        console.log(response.data); 
+        await fetchComments()
+        // Dispatch event to notify header about update
+        window.dispatchEvent(new CustomEvent('contactMessagesUpdated'));
+        Toast("success", "پاسخ فرستاده شد")
+        setReply(prev => ({ ...prev, [commentId]: "" })) // clear reply for this comment
+
+        // Close the collapse div programmatically
+        const collapseElement = document.getElementById(`collapseExample${commentId}`)
+        if (collapseElement) {
+            // eslint-disable-next-line no-undef
+            const bsCollapse = window.bootstrap?.Collapse.getInstance(collapseElement) || new window.bootstrap.Collapse(collapseElement)
+            bsCollapse.hide()
+        }
+    } catch (error) {
+        console.log(error);
+    }
+    }
 
     // New handler to mark comment as seen when button is clicked
     const handleMarkSeen = (commentId) => {
@@ -64,8 +106,8 @@ function Comments() {
     };
 
     useEffect(() => {
-        fetchComments();
-    }, []);
+        fetchComments()
+    }, [])
 
     return (
         <>
@@ -96,7 +138,7 @@ function Comments() {
                                                 }}
                                             >
                                                 <div className="d-flex">
-                                                    <img src={c?.image || "/K.webp"} alt="avatar" className="rounded-circle avatar-lg" style={{ width: "70px", height: "70px", borderRadius: "50%", objectFit: "cover" }} />
+                                                    <img src={c?.image || "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"} alt="avatar" className="rounded-circle avatar-lg" style={{ width: "70px", height: "70px", borderRadius: "50%", objectFit: "cover" }} />
                                                     <div style={{ marginRight: "1rem", marginTop: "0.5rem" }} >
                                                         <div className="d-flex align-items-center justify-content-between">
                                                             <div>
@@ -154,10 +196,10 @@ function Comments() {
                                                                             <label htmlFor={`replyTextarea${c.id}`} className="form-label">
                                                                                 پاسخ خود را بنویسید
                                                                             </label>
-                                                                            <textarea name="" id={`replyTextarea${c.id}`} cols="30" className="form-control" rows="4"></textarea>
+                                                                            <textarea onChange={(e) => handleReplyChange(c.id, e.target.value)} value={reply[c.id] || ""} name="" id={`replyTextarea${c.id}`} cols="30" className="form-control" rows="4"></textarea>
                                                                         </div>
 
-                                                                        <button type="button" className="btn btn-primary">
+                                                                        <button onClick={() => handleSubmitReply(c.id)} type="button" className="btn btn-primary">
                                                                             ارسال <i className="fas fa-paper-plane"> </i>
                                                                         </button>
                                                                     </div>
@@ -180,3 +222,4 @@ function Comments() {
 }
 
 export default Comments;
+
