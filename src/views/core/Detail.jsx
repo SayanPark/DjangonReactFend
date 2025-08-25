@@ -482,7 +482,7 @@ function Detail() {
                         <>
                           <hr/> 
                           <p className="mb-1 text-muted small">پاسخ نویسنده:</p>
-                          <p className="fw-bold text-dark">{c?.reply}</p>
+                          <p className="fw-bold text-secondary">{c?.reply}</p>
                         </>
                       )}
                       
