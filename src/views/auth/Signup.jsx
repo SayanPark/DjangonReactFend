@@ -95,7 +95,7 @@ function Signup() {
         data.append("about", formData.about);
         data.append("password", formData.password);
         data.append("password2", formData.password2);
-        data.append("receive_updates", formData.receiveUpdates ? "true" : "false"); // send checkbox value to backend
+        data.append("receive_updates", formData.receiveUpdates); // send boolean value directly
 
         const { error } = await createAccount(data);
         if (error) {
@@ -138,12 +138,6 @@ function Signup() {
                                                 const file = e.target.files[0];
                                                 if (file) {
                                                     const img = new Image();
-                                                    img.onload = () => {
-                                                        if (img.width > 800) {
-                                                            alert("طول عکس نباید بزرگتر از 800 پیکسل باشد.");
-                                                            e.target.value = null;
-                                                        }
-                                                    };
                                                     img.src = URL.createObjectURL(file);
                                                 }
                                             }}
