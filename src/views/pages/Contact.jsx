@@ -13,7 +13,7 @@ function Contact() {
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
-    const centralMapSrc = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3237.4925302782235!2d51.32747827491372!3d35.76327592546413!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f8dfd003cb30b53%3A0x19850ac82039ea7!2z2K_Zgdiq2LEg2YXYsdqp2LLbjCDYtNmH2LHYstmG2KfZhiDaqdin2LHYotmB2LHbjNmG!5e0!3m2!1sen!2s!4v1752095546718!5m2!1sen!2s";
+    const centralMapSrc = "https://www.google.com/maps/embed?pb=!1m21!1m12!1m3!1d809.3841535918051!2d51.33388502456312!3d35.762192699999986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m6!3e6!4m0!4m3!3m2!1d35.76210890557285!2d51.3346870050676!5e0!3m2!1sen!2s!4v1756153838856!5m2!1sen!2s";
     const storeMapSrc = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3237.411670361182!2d51.30427047491373!3d35.76526272535482!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f8dfd0078e6fcc1%3A0xf7d41c82be8b3b2b!2z2LTZh9ixINiy2YbYp9mGINqp2KfYsdii2YHYsduM2YY!5e0!3m2!1sen!2s!4v1752094605687!5m2!1sen!2s";
 
     const handleInputChange = (e) => {
