@@ -3,7 +3,6 @@ import { useParams, Link } from "react-router-dom";
 import apiInstance from "../../utils/axios";
 import Moment from "../../plugin/Moment";
 import Toast from "../../plugin/Toast";
-import useUserData from "../../plugin/useUserData";
 import { Editor, EditorState, convertFromRaw, CompositeDecorator, ContentState } from "draft-js";
 
 function findLinkEntities(contentBlock, callback, contentState) {
@@ -95,13 +94,6 @@ function Detail() {
     EditorState.createEmpty(decorator)
   );
   const [comments, setComments] = useState([]);
-  
-  // Reply functionality state
-  const [reply, setReply] = useState({}); // changed to object to hold reply per comment
-  const [seenComments, setSeenComments] = useState({}); // track seen comments by id
-  const userData = useUserData();
-  const user_id = userData?.user_id;
-  const canReplyToComment = userData?.is_staff || userData?.can_reply_comment || false;
 
   const fetchPost = async () => {
     console.log("Fetching post with slug:", param.slug);
@@ -271,42 +263,6 @@ function Detail() {
     fetchPost();
   };
 
-  // Reply functionality handlers
-  const handleReplyChange = (commentId, value) => {
-    setReply(prev => ({ ...prev, [commentId]: value }));
-  };
-
-  const handleSubmitReply = async (commentId) => {
-    try {
-      const response = await apiInstance.post(`author/dashboard/reply-comment/`, {
-        comment_id: commentId,
-        reply: reply[commentId] || "",
-      });
-      console.log(response.data); 
-      await fetchComments();
-      Toast("success", "پاسخ فرستاده شد");
-      setReply(prev => ({ ...prev, [commentId]: "" })); // clear reply for this comment
-
-      // Close the collapse div programmatically
-      const collapseElement = document.getElementById(`collapseExample${commentId}`);
-      if (collapseElement) {
-        // eslint-disable-next-line no-undef
-        const bsCollapse = window.bootstrap?.Collapse.getInstance(collapseElement) || new window.bootstrap.Collapse(collapseElement);
-        bsCollapse.hide();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // New handler to mark comment as seen when button is clicked
-  const handleMarkSeen = (commentId) => {
-    setSeenComments(prev => {
-      if (prev[commentId]) return prev; // already seen
-      return { ...prev, [commentId]: true };
-    });
-  };
-
   return (
     <>
       <section className="mt-5" style={{ direction: "rtl", textAlign: "right" }}>
@@ -467,10 +423,6 @@ function Detail() {
                   <div 
                     className="my-4 d-flex bg-light p-3 mb-3 rounded" 
                     key={index}
-                    style={{ 
-                      fontWeight: (seenComments[c.id] || c?.reply) ? "normal" : "bold",
-                      backgroundColor: (seenComments[c.id] || c?.reply) ? "#e3e3e3" : "transparent"
-                    }}
                   >
                     <div>
                       <div className="mb-2">
@@ -484,56 +436,6 @@ function Detail() {
                           <p className="mb-1 text-muted small">پاسخ نویسنده:</p>
                           <p className="fw-bold text-secondary">{c?.reply}</p>
                         </>
-                      )}
-                      
-                      {/* Reply functionality for authorized users */}
-                      {canReplyToComment && (
-                        <div className="mt-3">
-                          <p>
-                            {!c?.reply && (
-                              <button 
-                                className="btn btn-outline-secondary" 
-                                type="button" 
-                                data-bs-toggle="collapse" 
-                                data-bs-target={`#collapseExample${c.id.toString()}`} 
-                                aria-expanded="false" 
-                                aria-controls={`collapseExample${c.id.toString()}`}
-                                onClick={() => handleMarkSeen(c.id)}
-                                style={{marginLeft: ".5rem"}}
-                              >
-                                پاسخ دهید
-                              </button>
-                            )}
-                          </p>
-                          <div className="collapse" id={`collapseExample${c.id.toString()}`}>
-                            <div className="card card-body">
-                              <div>
-                                <div className="mb-3">
-                                  <label htmlFor={`replyTextarea${c.id}`} className="form-label">
-                                    پاسخ خود را بنویسید
-                                  </label>
-                                  <textarea 
-                                    onChange={(e) => handleReplyChange(c.id, e.target.value)} 
-                                    value={reply[c.id] || ""} 
-                                    name="" 
-                                    id={`replyTextarea${c.id}`} 
-                                    cols="30" 
-                                    className="form-control" 
-                                    rows="4"
-                                  ></textarea>
-                                </div>
-
-                                <button 
-                                  onClick={() => handleSubmitReply(c.id)} 
-                                  type="button" 
-                                  className="btn btn-primary"
-                                >
-                                  ارسال <i className="fas fa-paper-plane"> </i>
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
                       )}
                     </div>
                   </div>
