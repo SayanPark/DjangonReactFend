@@ -181,7 +181,7 @@ function Dashboard() {
 
                         <div className="col-md-6 col-xxl-4">
                             <div className="card border h-100">
-                                <div className="card-header border-bottom d-flex justify-content-between align-items-center  p-3">
+                                <div className="card-header border-bottom d-flex justify-content-between align-items-center p-3">
                                     <h5 className="card-header-title mb-0">نظرات اخیر</h5>
                                     <div className="dropdown text-end">
                                         <Link to="/comments/" className="btn border-0 p-0 mb-0" role="button" id="dropdownShare3">
@@ -194,34 +194,32 @@ function Dashboard() {
                                         {[...comments, ...contactMessages]?.slice(0, 3)?.map((c, index) => (
                                             <React.Fragment key={c.id || index}>
                                                 <div className="col-12">
-                                                    <div className="d-flex align-items-center position-relative">
-                                                        <Link to="/comments/" className="h6 stretched-link text-decoration-none text-dark">
-                                                            <div className="avatar avatar-lg flex-shrink-0">
-                                                                <img 
-                                                                    className="avatar-img" 
-                                                                    src={c?.image || "/K.webp"} 
-                                                                    style={{ width: "100px", height: "100px", objectFit: "cover", borderRadius: "50%" }} 
-                                                                    alt="avatar" 
-                                                                    onError={(e) => {
-                                                                        // If the image fails to load, fallback to default image
-                                                                        if (e.target.src !== "/K.webp") {
-                                                                            e.target.src = "/K.webp";
-                                                                        }
-                                                                    }}
-                                                                />
+                                                    <div className="d-flex position-relative">
+                                                        <img 
+                                                            className="avatar-img" 
+                                                            src={c?.image || "/K.webp"} 
+                                                            style={{ width: "100px", height: "100px", objectFit: "cover", borderRadius: "50%" }} 
+                                                            alt="avatar" 
+                                                            onError={(e) => {
+                                                                // If the image fails to load, fallback to default image
+                                                                if (e.target.src !== "/K.webp") {
+                                                                    e.target.src = "/K.webp";
+                                                                }
+                                                            }}
+                                                        />
+                                                        <div className="me-3">
+                                                            <Link to="/comments/" className="h6 stretched-link text-decoration-none text-dark">
                                                                 <p className="mb-1">                                           
                                                                     {" "}
                                                                     {c?.comment || c?.message}
                                                                 </p>
-                                                                <div className="d-flex justify-content-between">
-                                                                    <p className="small mb-0">
-                                                                        <i className={c?.message ? "fa fa-envelope text-warning" : "bi bi-chat-left-quote-fill text-success"}></i>
-                                                                        <i className="me-1">توسط </i>{c?.name}
-                                                                        {c?.message && <span className="text-warning fw-bold"> (پیام تماس) </span>}
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </Link>
+                                                            </Link>
+                                                            <p className="small mb-0">
+                                                                <i className={c?.message ? "fa fa-envelope text-warning" : "bi bi-chat-left-quote-fill text-success"}></i>
+                                                                <i className="me-1">توسط </i>{c?.name}
+                                                                {c?.message && <span className="text-warning fw-bold"> (پیام تماس) </span>}
+                                                            </p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <hr className="my-3" />
