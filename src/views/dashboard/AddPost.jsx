@@ -155,6 +155,21 @@ function AddPost() {
     }
   };
 
+  const handleVideoChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.type.startsWith("video/")) {
+        setVideoPreview(URL.createObjectURL(file));
+        setCreatePost({
+          ...post,
+          video: file,
+        });
+      } else {
+        Toast("error", "لطفاً یک فایل ویدیویی انتخاب کنید");
+      }
+    }
+  };
+
   const promptForLink = () => {
     Swal.fire({
       title: 'افزودن لینک',
@@ -247,6 +262,9 @@ function AddPost() {
     formdata.append("post_status", post.status);
     if (post.image) {
       formdata.append("image", post.image);
+    }
+    if (post.video) {
+      formdata.append("video", post.video);
     }
 
     try {
