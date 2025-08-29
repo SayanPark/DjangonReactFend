@@ -136,7 +136,7 @@ function CategorySlider({ category }) {
             <div className="container2">
                 <div className="row g-0">
                     <div className="col-12">
-                        <div className="mb-4 me-3">
+                        <div className=" me-lg-6 me-5 mb-4">
                             <h2>دسته بندی مطالب</h2>
                         </div>
                         <Slider {...sliderSettings}>

@@ -34,6 +34,7 @@ const ProfileList = lazy(() => import("./views/core/ProfileList"));
 const ProfileDetail = lazy(() => import("./views/core/ProfileDetails"));
 const AllPosts = lazy(() => import("./views/pages/AllPosts"));
 const News = lazy(() => import("./views/pages/News"));
+const Services = lazy(() => import("./views/pages/Services"))
 
 function PrivateRoute({ element }) {
   const isLoggedIn = useAuthStore.getState().isLoggedIn();
@@ -112,6 +113,7 @@ function AppWrapper() {
             <Route path="/author-profile/:id/" element={<ProfileDetail />} />
             <Route path="/all-posts/" element={<AllPosts />} />
             <Route path="/news/" element={<News />} />
+            <Route path="/services/" element={<Services/>}/>
             {/* Catch-all route for 404 */}
             <Route path="*" element={<Page404 />} />
           </Routes>

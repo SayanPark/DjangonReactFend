@@ -65,7 +65,6 @@ function Header() {
 
     useEffect(() => {
         fetchUnansweredContactMessages();
-
         // Add event listener for contactMessagesUpdated event to refetch unanswered messages
         const handleContactMessagesUpdated = () => {
             if (!loggedIn) {
@@ -220,6 +219,11 @@ function Header() {
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/news">
                                         اخبار
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/services">
+                                        خدمات
                                     </Link>
                                 </li>
                                 <li className="nav-item dropdown" style={{ direction: "rtl" }}>

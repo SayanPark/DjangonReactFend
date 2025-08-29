@@ -7,6 +7,7 @@ import useUserData from "../../plugin/useUserData";
 import Slider from "react-slick";
 import "../../index.css";
 import "./AvatarStyles.css";
+import ServiceSection from "./ServiceSection"; // Importing ServiceSection
 
 function ImageSlider() {
     const images = [
@@ -57,20 +58,22 @@ function ImageSlider() {
 
 function Index({ logoutMessage }) {
     const [message, setMessage] = useState(null);
-
-    React.useEffect(() => {
-        if (logoutMessage) {
-            setMessage(logoutMessage);
-            const timer = setTimeout(() => setMessage(null), 5000);
-            return () => clearTimeout(timer);
-        }
-    }, [logoutMessage]);
-
     const [posts, setPosts] = useState([])
     const [category, setCategory] = useState([])
     const [authenticatedUserCount, setAuthenticatedUserCount] = useState(0)
     const [usersData, setUsersData] = useState([])
     const [, setLoading] = useState(true)
+    
+    const itemsPerPage = 4
+    const [currentPage, setCurrentPage] = useState(1)
+    const indexOfLastItem = currentPage * itemsPerPage
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage
+    const newsPosts = posts.filter(post => post.category && post.category.title === "اخبار")
+    const otherPosts = posts.filter(post => !(post.category && post.category.title === "اخبار"))
+    const paginatedOtherPosts = otherPosts.slice(indexOfFirstItem, indexOfLastItem)
+    const totalPages = Math.ceil(otherPosts.length / itemsPerPage)
+    const user_id = useUserData()?.user_id
+    const pageNumbers = Array.from({length: totalPages}, (_, index) => index + 1)
     const [sliderSettings] = useState({
         dots: false,
         infinite: true,
@@ -86,17 +89,14 @@ function Index({ logoutMessage }) {
         {breakpoint: 576, settings: {slidesToShow: 1}}
         ]
     });
-    const itemsPerPage = 4
-    const [currentPage, setCurrentPage] = useState(1)
-    const indexOfLastItem = currentPage * itemsPerPage
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage
-    const newsPosts = posts.filter(post => post.category && post.category.title === "اخبار")
-    const otherPosts = posts.filter(post => !(post.category && post.category.title === "اخبار"))
-    const paginatedOtherPosts = otherPosts.slice(indexOfFirstItem, indexOfLastItem)
-    const totalPages = Math.ceil(otherPosts.length / itemsPerPage)
-    const user_id = useUserData()?.user_id
-    const pageNumbers = Array.from({length: totalPages}, (_, index) => index + 1)
 
+    React.useEffect(() => {
+        if (logoutMessage) {
+            setMessage(logoutMessage);
+            const timer = setTimeout(() => setMessage(null), 5000);
+            return () => clearTimeout(timer);
+        }
+    }, [logoutMessage]);
 
     const fetchPosts = async () => {
         try {
@@ -249,13 +249,10 @@ function Index({ logoutMessage }) {
                     <div className="container">
                         <div className="row">
                             <div className="col">
-                                <h2 className="text-end d-block mt-1">جدیدترین اخبار</h2>
+                                <h2 className="text-end d-block mt-1 pt-4 pb-4">جدیدترین اخبار</h2>
                             </div>
                         </div>
                     </div>
-                </section>
-
-                <section className="pt-4 pb-4">
                     <div className="container">
                         <div className="row">
                             {newsPosts.slice(0, 4).map((post) => (
@@ -375,10 +372,25 @@ function Index({ logoutMessage }) {
                 </section>
 
                 <section className="pt-4 pb-4 custom-bg-yellow"> 
-                    <div className="container mt-4">
-                    <h3 className="mb-3 me-2">شهروندان شهرزنان کارآفرین</h3>
+                    <div className="container mt-4">                        
                         <div className="row align-items-start">
+                            <div className="col align-items-center mt-7 mb-5">
+                                <p>
+                                    از تمام بانوان کارآفرین، سرمایه گذاران و علاقه‌مندان به توسعه پایدار دعوت میکنیم به ما بپیوندند تا باهم دنیایی بهتر و برابر برای همه بسازیم.
+                                </p>
+                                <p>
+                                    با دنیای شهروندان شهرزنان کارآفرین آشنا شوید و از تجربیات آن‌ها بهره ببرید.
+                                </p>
+                                <br/>
+                                <Link to={"/register/"} className="btn btn-success">
+                                    به ما بپیوندید
+                                </Link>
+                                <Link to={"/authors/"} className="btn btn-outline-success me-2">
+                                    مشاهده شهروندان
+                                </Link>
+                            </div> 
                             <div className="col-md-6 align-self-center">
+                                <h3 className="mb-5">شهروندان شهرزنان کارآفرین</h3>
                                 {usersData && usersData.length > 0 ? (
                                     <Slider {...sliderSettings}>
                                         {usersData.map((user) => (
@@ -413,22 +425,7 @@ function Index({ logoutMessage }) {
                                 ) : (
                                     <p>درحال بازگذاری شهروندان...</p>
                                 )}
-                            </div>
-                            <div className="col align-items-center mt-7 mb-5">
-                                <p>
-                                    از تمام بانوان کارآفرین، سرمایه گذاران و علاقه‌مندان به توسعه پایدار دعوت میکنیم به ما بپیوندند تا باهم دنیایی بهتر و برابر برای همه بسازیم.
-                                </p>
-                                <p>
-                                    با دنیای شهروندان شهرزنان کارآفرین آشنا شوید و از تجربیات آن‌ها بهره ببرید.
-                                </p>
-                                <br/>
-                                <Link to={"/register/"} className="btn btn-success">
-                                    به ما بپیوندید
-                                </Link>
-                                <Link to={"/authors/"} className="btn btn-outline-success me-2">
-                                    مشاهده شهروندان
-                                </Link>
-                            </div>   
+                            </div>                              
                         </div>
                     </div>       
                 </section>
@@ -437,13 +434,10 @@ function Index({ logoutMessage }) {
                     <div className="container">
                         <div className="row">
                             <div className="col">
-                                <h2 className="text-end d-block mt-1">جدیدترین مقالات</h2>
+                                <h2 className="text-end d-block mt-1 pt-4 pb-4">جدیدترین مقالات</h2>
                             </div>
                         </div>
                     </div>
-                </section>
-
-                <section className="pt-4 pb-4">
                     <div className="container">
                         <div className="row">
                             {paginatedOtherPosts?.map((post) => (
@@ -542,6 +536,8 @@ function Index({ logoutMessage }) {
                         </nav>
                     </div>
                 </section>
+
+                <ServiceSection />
 
                 <CategorySlider category={category} />               
             </div>
