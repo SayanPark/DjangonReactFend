@@ -84,7 +84,6 @@ function AddPost() {
   const [linkInputVisible, setLinkInputVisible] = useState(false);
   const [linkUrl, setLinkUrl] = useState("");
   const [linkText, setLinkText] = useState("");
-  const [fontSize, setFontSize] = useState("14px");
   const user_id = useUserData()?.user_id || null;
   const navigate = useNavigate();
 
@@ -345,9 +344,29 @@ function AddPost() {
                       <div className="mb-3">
                         <label className="form-label">مقاله</label>
                         <br/>
-                        <small>مقاله خود را اینجا بنویسید</small>
+                        <small className="mb-3">مقاله خود را اینجا بنویسید</small>
                         <div className="mb-3 d-flex flex-column" style={{ border: "1px solid #ccc", height: "300px", padding: "10px" }}>
                           <div className="mb-3 d-flex gap-2" style={{ flexShrink: 0 }}>
+                            <input id="fileUploadImage" type="file" accept="image/*" onChange={handleFileUpload} style={{ display: "none" }}/>
+                            <label htmlFor="fileUploadImage" className="btn btn-outline-secondary btn-lg" style={{outline: "none",boxShadow: "none",border: "none",padding: 0,}}>
+                              <i className="bi bi-image"></i>
+                            </label>
+                            <input id="fileUploadVideo" type="file" accept="video/*" onChange={handleFileUpload} style={{ display: "none" }}/>
+                            <label htmlFor="fileUploadVideo" className="btn btn-outline-secondary btn-lg" style={{ outline: "none", boxShadow: "none", border: "none", padding: 0,}}>
+                              <i className="bi bi-camera-video"></i>
+                            </label>
+                            <button 
+                              type="button" 
+                              className="btn btn-outline-secondary btn-lg" 
+                              onClick={promptForLink}
+                              style={{
+                                outline: "none",
+                                boxShadow: "none",
+                                border: "none",
+                                padding: 0,
+                              }}
+                            >
+                            <i className="bi bi-link-45deg"></i>
                             <button type="button" className="btn btn-outline-secondary btn-lg" onClick={toggleBold}
                               style={{
                                 outline: "none",
@@ -375,23 +394,6 @@ function AddPost() {
                               <option value="18">18px</option>
                               <option value="20">20px</option>
                             </select>
-                            <input id="fileUploadImage" type="file" accept="image/*" onChange={handleFileUpload} style={{ display: "none" }}/>
-                            <label htmlFor="fileUploadImage" className="btn btn-outline-secondary btn-lg" style={{outline: "none",boxShadow: "none",border: "none",padding: 0,}}>
-                              <i className="bi bi-image"></i>
-                            </label>
-                            <input id="fileUploadVideo" type="file" accept="video/*" onChange={handleFileUpload} style={{ display: "none" }}/>
-                            <label htmlFor="fileUploadVideo" className="btn btn-outline-secondary btn-lg" style={{ outline: "none", boxShadow: "none", border: "none", padding: 0,}}>
-                              <i className="bi bi-camera-video"></i>
-                            </label>
-                            <button type="button" className="btn btn-outline-secondary btn-lg" onClick={promptForLink}
-                              style={{
-                                outline: "none",
-                                boxShadow: "none",
-                                border: "none",
-                                padding: 0,
-                              }}
-                            >
-                              <i className="bi bi-link-45deg"></i>
                             </button>
                             {linkInputVisible && (
                               <div className="input-group mt-2">
