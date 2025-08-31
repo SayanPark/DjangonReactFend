@@ -310,7 +310,7 @@ function Header() {
                                     </ul>
                                 </li>
                             </ul>
-                            <ul className="navbar-nav navbar-nav-scroll me-auto" >
+                            <ul className="navbar-nav navbar-nav-scroll me-auto mt-1" >
                                 <div className="nav-item nav-item-left" >
                                     {loggedIn ? (
                                         <>
