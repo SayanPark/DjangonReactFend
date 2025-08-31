@@ -65,6 +65,24 @@ function AppWrapper() {
     }
   }, [location.state?.logoutMessage]);
 
+  React.useEffect(() => {
+    const updateThemeColor = () => {
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) {
+        if (window.innerWidth < 768) {
+          meta.setAttribute('content', '#887298');
+        } else {
+          meta.setAttribute('content', '#ffffff');
+        }
+      }
+    };
+
+    updateThemeColor();
+    window.addEventListener('resize', updateThemeColor);
+
+    return () => window.removeEventListener('resize', updateThemeColor);
+  }, []);
+
   return (
     <>
       <Header />
