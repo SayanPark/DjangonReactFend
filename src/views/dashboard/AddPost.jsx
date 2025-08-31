@@ -4,7 +4,7 @@ import apiInstance from "../../utils/axios";
 import useUserData from "../../plugin/useUserData";
 import Toast from "../../plugin/Toast";
 import Swal from "sweetalert2";
-import { Editor, EditorState, AtomicBlockUtils, Modifier, CompositeDecorator, convertToRaw} from "draft-js";
+import { Editor, EditorState, AtomicBlockUtils, Modifier, CompositeDecorator, convertToRaw, RichUtils} from "draft-js";
 import "draft-js/dist/Draft.css";
 import * as setImmediate from 'setimmediate';
 
@@ -84,8 +84,30 @@ function AddPost() {
   const [linkInputVisible, setLinkInputVisible] = useState(false);
   const [linkUrl, setLinkUrl] = useState("");
   const [linkText, setLinkText] = useState("");
+  const [fontSize, setFontSize] = useState("14px");
   const user_id = useUserData()?.user_id || null;
   const navigate = useNavigate();
+
+  const customStyleMap = {
+    'FONT_SIZE_12': { fontSize: '12px' },
+    'FONT_SIZE_14': { fontSize: '14px' },
+    'FONT_SIZE_16': { fontSize: '16px' },
+    'FONT_SIZE_18': { fontSize: '18px' },
+    'FONT_SIZE_20': { fontSize: '20px' },
+  };
+
+  const toggleBold = () => {
+    setEditorState(RichUtils.toggleInlineStyle(editorState, 'BOLD'));
+  };
+
+  const toggleItalic = () => {
+    setEditorState(RichUtils.toggleInlineStyle(editorState, 'ITALIC'));
+  };
+
+  const changeFontSize = (size) => {
+    const style = `FONT_SIZE_${size}`;
+    setEditorState(RichUtils.toggleInlineStyle(editorState, style));
+  };
 
   const fetchCategory = async () => {
     try {
@@ -99,7 +121,6 @@ function AddPost() {
   useEffect(() => {
     fetchCategory();
   }, []);
-
 
   const handleCreatePostChange = (event) => {
     setCreatePost({
@@ -327,6 +348,33 @@ function AddPost() {
                         <small>مقاله خود را اینجا بنویسید</small>
                         <div className="mb-3 d-flex flex-column" style={{ border: "1px solid #ccc", height: "300px", padding: "10px" }}>
                           <div className="mb-3 d-flex gap-2" style={{ flexShrink: 0 }}>
+                            <button type="button" className="btn btn-outline-secondary btn-lg" onClick={toggleBold}
+                              style={{
+                                outline: "none",
+                                boxShadow: "none",
+                                border: "none",
+                                padding: 0,
+                              }}
+                            >
+                              <i className="bi bi-type-bold"></i>
+                            </button>
+                            <button type="button" className="btn btn-outline-secondary btn-lg" onClick={toggleItalic}
+                              style={{
+                                outline: "none",
+                                boxShadow: "none",
+                                border: "none",
+                                padding: 0,
+                              }}
+                            >
+                              <i className="bi bi-type-italic"></i>
+                            </button>
+                            <select className="form-select" onChange={(e) => changeFontSize(e.target.value)} style={{ width: "auto", fontSize: "12px" }}>
+                              <option value="14">14px</option>
+                              <option value="12">12px</option>
+                              <option value="16">16px</option>
+                              <option value="18">18px</option>
+                              <option value="20">20px</option>
+                            </select>
                             <input id="fileUploadImage" type="file" accept="image/*" onChange={handleFileUpload} style={{ display: "none" }}/>
                             <label htmlFor="fileUploadImage" className="btn btn-outline-secondary btn-lg" style={{outline: "none",boxShadow: "none",border: "none",padding: 0,}}>
                               <i className="bi bi-image"></i>
@@ -362,7 +410,7 @@ function AddPost() {
                           </div>
                           <hr />
                           <div style={{ flexGrow: 1, overflowY: "auto" }}>
-                            <Editor editorState={editorState} onChange={onChange} blockRendererFn={mediaBlockRenderer} style={{ direction: "rtl", minHeight: "100%" }}/>
+                            <Editor editorState={editorState} onChange={onChange} blockRendererFn={mediaBlockRenderer} customStyleMap={customStyleMap} style={{ direction: "rtl", minHeight: "100%" }}/>
                           </div>
                         </div>
                       </div>

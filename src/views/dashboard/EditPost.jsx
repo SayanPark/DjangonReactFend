@@ -4,7 +4,7 @@ import apiInstance from "../../utils/axios";
 import useUserData from "../../plugin/useUserData";
 import Toast from "../../plugin/Toast";
 import Swal from "sweetalert2";
-import { Editor, EditorState, convertFromRaw, ContentState, AtomicBlockUtils, Modifier, CompositeDecorator, convertToRaw} from "draft-js";
+import { Editor, EditorState, convertFromRaw, ContentState, AtomicBlockUtils, Modifier, CompositeDecorator, convertToRaw, RichUtils} from "draft-js";
 import "draft-js/dist/Draft.css";
 import * as setImmediate from 'setimmediate';
 import ShimmerImage from "../../components/ShimmerImage";
@@ -85,9 +85,18 @@ function EditPost() {
   const [linkInputVisible, setLinkInputVisible] = useState(false);
   const [linkUrl, setLinkUrl] = useState("");
   const [linkText, setLinkText] = useState("");
+
   const userId = useUserData()?.user_id || null;
   const navigate = useNavigate();
   const param = useParams();
+
+  const customStyleMap = {
+    'FONT_SIZE_12': { fontSize: '12px' },
+    'FONT_SIZE_14': { fontSize: '14px' },
+    'FONT_SIZE_16': { fontSize: '16px' },
+    'FONT_SIZE_18': { fontSize: '18px' },
+    'FONT_SIZE_20': { fontSize: '20px' },
+  };
 
   const fetchCategory = async () => {
     try {
@@ -170,6 +179,21 @@ function EditPost() {
 
   const onChange = (editorState) => {
     setEditorState(editorState);
+  };
+
+  const toggleBold = () => {
+    const newState = RichUtils.toggleInlineStyle(editorState, 'BOLD');
+    setEditorState(newState);
+  };
+
+  const toggleItalic = () => {
+    const newState = RichUtils.toggleInlineStyle(editorState, 'ITALIC');
+    setEditorState(newState);
+  };
+
+  const changeFontSize = (size) => {
+    const style = `FONT_SIZE_${size}`;
+    setEditorState(RichUtils.toggleInlineStyle(editorState, style));
   };
 
   // Add a function to programmatically insert media blocks into the editor content
@@ -415,6 +439,19 @@ function EditPost() {
                             >
                               <i className="bi bi-link-45deg"></i>
                             </button>
+                            <button type="button" className="btn btn-outline-secondary btn-lg" onClick={toggleBold} style={{ outline: "none", boxShadow: "none", border: "none", padding: 0 }}>
+                              <i className="bi bi-type-bold"></i>
+                            </button>
+                            <button type="button" className="btn btn-outline-secondary btn-lg" onClick={toggleItalic} style={{ outline: "none", boxShadow: "none", border: "none", padding: 0 }}>
+                              <i className="bi bi-type-italic"></i>
+                            </button>
+                            <select className="form-select" onChange={(e) => changeFontSize(e.target.value)} style={{ width: "auto", fontSize: "12px" }}>
+                              <option value="14">14px</option>
+                              <option value="12">12px</option>
+                              <option value="16">16px</option>
+                              <option value="18">18px</option>
+                              <option value="20">20px</option>
+                            </select>
                             {linkInputVisible && (
                               <div className="input-group mt-2">
                                 <input
@@ -453,6 +490,7 @@ function EditPost() {
                               editorState={editorState}
                               onChange={onChange}
                               blockRendererFn={mediaBlockRenderer}
+                              customStyleMap={customStyleMap}
                               style={{ direction: "rtl", minHeight: "100%" }}
                             />
                           </div>
