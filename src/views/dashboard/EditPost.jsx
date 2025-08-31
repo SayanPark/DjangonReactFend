@@ -217,6 +217,11 @@ function EditPost() {
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
+      const maxSize = 100 * 1024 * 1024; // 100MB for videos
+      if (file.size > maxSize) {
+        Toast("error", "حجم فایل بیش از حد مجاز است. حداکثر حجم مجاز 100 مگابایت است.");
+        return;
+      }
       const fileType = file.type.startsWith("image/")
         ? "image"
         : file.type.startsWith("video/")
