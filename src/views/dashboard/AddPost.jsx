@@ -369,8 +369,8 @@ function AddPost() {
                               <i className="bi bi-type-italic"></i>
                             </button>
                             <select className="form-select" onChange={(e) => changeFontSize(e.target.value)} style={{ width: "auto", fontSize: "12px" }}>
-                              <option value="14">14px</option>
                               <option value="12">12px</option>
+                              <option value="14">14px</option>
                               <option value="16">16px</option>
                               <option value="18">18px</option>
                               <option value="20">20px</option>
