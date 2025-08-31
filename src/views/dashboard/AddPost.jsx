@@ -344,7 +344,7 @@ function AddPost() {
                       <div className="mb-3">
                         <label className="form-label">مقاله</label>
                         <br/>
-                        <small className="mb-3">مقاله خود را اینجا بنویسید</small>
+                        <small>مقاله خود را اینجا بنویسید</small>
                         <div className="mb-3 d-flex flex-column" style={{ border: "1px solid #ccc", height: "300px", padding: "10px" }}>
                           <div className="mb-3 d-flex gap-2" style={{ flexShrink: 0 }}>
                             <input id="fileUploadImage" type="file" accept="image/*" onChange={handleFileUpload} style={{ display: "none" }}/>
@@ -355,10 +355,7 @@ function AddPost() {
                             <label htmlFor="fileUploadVideo" className="btn btn-outline-secondary btn-lg" style={{ outline: "none", boxShadow: "none", border: "none", padding: 0,}}>
                               <i className="bi bi-camera-video"></i>
                             </label>
-                            <button 
-                              type="button" 
-                              className="btn btn-outline-secondary btn-lg" 
-                              onClick={promptForLink}
+                            <button type="button" className="btn btn-outline-secondary btn-lg" onClick={promptForLink}
                               style={{
                                 outline: "none",
                                 boxShadow: "none",
@@ -366,34 +363,7 @@ function AddPost() {
                                 padding: 0,
                               }}
                             >
-                            <i className="bi bi-link-45deg"></i>
-                            <button type="button" className="btn btn-outline-secondary btn-lg" onClick={toggleBold}
-                              style={{
-                                outline: "none",
-                                boxShadow: "none",
-                                border: "none",
-                                padding: 0,
-                              }}
-                            >
-                              <i className="bi bi-type-bold"></i>
-                            </button>
-                            <button type="button" className="btn btn-outline-secondary btn-lg" onClick={toggleItalic}
-                              style={{
-                                outline: "none",
-                                boxShadow: "none",
-                                border: "none",
-                                padding: 0,
-                              }}
-                            >
-                              <i className="bi bi-type-italic"></i>
-                            </button>
-                            <select className="form-select" onChange={(e) => changeFontSize(e.target.value)} style={{ width: "auto", fontSize: "12px" }}>
-                              <option value="12">12px</option>
-                              <option value="14">14px</option>
-                              <option value="16">16px</option>
-                              <option value="18">18px</option>
-                              <option value="20">20px</option>
-                            </select>
+                              <i className="bi bi-link-45deg"></i>
                             </button>
                             {linkInputVisible && (
                               <div className="input-group mt-2">
@@ -410,6 +380,33 @@ function AddPost() {
                               </div>
                             )}
                           </div>
+                          <button type="button" className="btn btn-outline-secondary btn-lg" onClick={toggleBold}
+                            style={{
+                              outline: "none",
+                              boxShadow: "none",
+                              border: "none",
+                              padding: 0,
+                            }}
+                          >
+                            <i className="bi bi-type-bold"></i>
+                          </button>
+                          <button type="button" className="btn btn-outline-secondary btn-lg" onClick={toggleItalic}
+                            style={{
+                            outline: "none",
+                            boxShadow: "none",
+                            border: "none",
+                            padding: 0,
+                          }}
+                          >
+                            <i className="bi bi-type-italic"></i>
+                          </button>
+                          <select className="form-select" onChange={(e) => changeFontSize(e.target.value)} style={{ width: "auto", fontSize: "12px" }}>
+                            <option value="12">12px</option>
+                            <option value="14">14px</option>
+                            <option value="16">16px</option>
+                            <option value="18">18px</option>
+                            <option value="20">20px</option>
+                          </select>
                           <hr />
                           <div style={{ flexGrow: 1, overflowY: "auto" }}>
                             <Editor editorState={editorState} onChange={onChange} blockRendererFn={mediaBlockRenderer} customStyleMap={customStyleMap} style={{ direction: "rtl", minHeight: "100%" }}/>
