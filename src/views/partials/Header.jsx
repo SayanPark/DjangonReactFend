@@ -314,8 +314,8 @@ function Header() {
                                 <div className="nav-item nav-item-left" >
                                     {loggedIn ? (
                                         <>
-                                            <div className="d-flex flex-column flex-sm-row align-items-start align-items-sm-center" style={{gap: "0.5rem"}}>
-                                                <div className="nav-item dropdown ms-2 mb-2 mb-sm-0">
+                                            <div className="d-flex flex-row align-items-center" style={{gap: "0.5rem"}}>
+                                                <div className="nav-item dropdown ms-2">
                                                     <button className="btn btn-primary dropdown-toggle" id="dashboardMenu" data-bs-toggle="dropdown" aria-expanded="false" type="button" style={{direction: "rtl"}}>
                                                         داشبورد <i className="bi bi-person-fill"></i>
                                                     </button>
