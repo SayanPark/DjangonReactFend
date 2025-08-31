@@ -162,6 +162,17 @@ function Header() {
                     ul {
                         padding-right: 0 !important;
                     }
+                    .dropdown-menu {
+                        background-color: #665672 !important;
+                        color: white !important;
+                    }
+                    .dropdown-item {
+                        color: white !important;
+                    }
+                    .dropdown-item:hover {
+                        background-color: rgba(255, 255, 255, 0.1) !important;
+                        color: white !important;
+                    }
                 }
                 /* Make font size a little smaller for departments dropdown menu */
                 .dropdown-menu.dropdown-menu-end.dropdown-menu-columns {
