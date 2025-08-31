@@ -95,6 +95,16 @@ function Detail() {
   );
   const [comments, setComments] = useState([]);
 
+  const customStyleMap = {
+    'FONT_SIZE_12': { fontSize: '12px' },
+    'FONT_SIZE_14': { fontSize: '14px' },
+    'FONT_SIZE_16': { fontSize: '16px' },
+    'FONT_SIZE_18': { fontSize: '18px' },
+    'FONT_SIZE_20': { fontSize: '20px' },
+    'BOLD': { fontWeight: 'bold' },
+    'ITALIC': { fontStyle: 'italic' },
+  };
+
   const fetchPost = async () => {
     console.log("Fetching post with slug:", param.slug);
     try {
@@ -414,7 +424,12 @@ function Detail() {
               )}
               <br />
               <div style={{ whiteSpace: "pre-wrap" }}>
-                <Editor editorState={editorState} readOnly={true} blockRendererFn={mediaBlockRenderer} />
+                <Editor
+                  editorState={editorState}
+                  readOnly={true}
+                  blockRendererFn={mediaBlockRenderer}
+                  customStyleMap={customStyleMap}
+                />
               </div>
 
               <div className="mt-5">
