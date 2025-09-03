@@ -282,6 +282,9 @@ function AddPost() {
     if (post.image) {
       formdata.append("image", post.image);
     }
+    if (post.video) {
+      formdata.append("video", post.video);
+    }
 
     try {
       const response = await apiInstance.post("author/dashboard/post-create/", formdata, {
