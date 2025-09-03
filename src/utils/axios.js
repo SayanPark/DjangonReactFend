@@ -6,7 +6,7 @@ const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || API_BASE_URL;
 
 const apiInstance = axios.create({
     baseURL: apiBaseUrl,
-    timeout: 600000,  // Increased timeout to 600 seconds (10 minutes) for large file uploads
+    timeout: 120000,  // Increased timeout to 120 seconds
     headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
