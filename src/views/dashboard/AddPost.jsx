@@ -78,6 +78,7 @@ function mediaBlockRenderer(block) {
 function AddPost() {
   const [post, setCreatePost] = useState({ title: "", category: parseInt(""), tags: "", status: "",});
   const [imagePreview, setImagePreview] = useState(null);
+  const [videoPreview, setVideoPreview] = useState(null);
   const [editorState, setEditorState] = useState(EditorState.createEmpty(decorator));
   const [categoryList, setCategoryList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -172,11 +173,19 @@ function AddPost() {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setImagePreview(URL.createObjectURL(file));
-      setCreatePost({
-        ...post,
-        image: file,
-      });
+      if (file.type.startsWith("image/")) {
+        setImagePreview(URL.createObjectURL(file));
+        setCreatePost({
+          ...post,
+          image: file,
+        });
+      } else if (file.type.startsWith("video/")) {
+        setVideoPreview(URL.createObjectURL(file));
+        setCreatePost({
+          ...post,
+          video: file,
+        });
+      }
     }
   };
 
