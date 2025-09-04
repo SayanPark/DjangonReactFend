@@ -314,13 +314,16 @@ function EditPost() {
       if (post.image) {
         formData.append("image", post.image);
       }
+      if (post.video) {
+        formData.append("video", post.video);
+      }
       const config = {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       };
       // Increase timeout for video uploads
-      if (post.image && post.image.type && post.image.type.startsWith("video/")) {
+      if ((post.image && post.image.type && post.image.type.startsWith("video/")) || (post.video && post.video.type && post.video.type.startsWith("video/"))) {
         config.timeout = 300000; // 5 minutes
       }
       await apiInstance.put(`author/dashboard/post-detail/${userId}/${param.id}/`, formData, config);

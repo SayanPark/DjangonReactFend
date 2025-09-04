@@ -6,7 +6,7 @@ const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || API_BASE_URL;
 
 const apiInstance = axios.create({
     baseURL: apiBaseUrl,
-    timeout: 120000,  // Increased timeout to 120 seconds
+    timeout: 300000,  // Increased timeout to 300 seconds
     headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
