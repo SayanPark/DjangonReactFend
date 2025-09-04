@@ -287,11 +287,16 @@ function AddPost() {
     }
 
     try {
-      const response = await apiInstance.post("author/dashboard/post-create/", formdata, {
+      const config = {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      });
+      };
+      // Increase timeout for video uploads
+      if (post.video) {
+        config.timeout = 300000; // 5 minutes
+      }
+      const response = await apiInstance.post("author/dashboard/post-create/", formdata, config);
       console.log(response.data);
       setIsLoading(false);
       Swal.fire({

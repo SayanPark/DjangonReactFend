@@ -314,11 +314,16 @@ function EditPost() {
       if (post.image) {
         formData.append("image", post.image);
       }
-      await apiInstance.put(`author/dashboard/post-detail/${userId}/${param.id}/`, formData, {
+      const config = {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      });
+      };
+      // Increase timeout for video uploads
+      if (post.image && post.image.type && post.image.type.startsWith("video/")) {
+        config.timeout = 300000; // 5 minutes
+      }
+      await apiInstance.put(`author/dashboard/post-detail/${userId}/${param.id}/`, formData, config);
       Toast("success", "پست با موفقیت به‌روزرسانی شد");
       navigate("/dashboard/posts/");
     } catch (error) {
