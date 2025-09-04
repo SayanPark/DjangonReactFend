@@ -110,11 +110,16 @@ function Index({ logoutMessage }) {
                 apiInstance.get(`post/category/list/`),
                 apiInstance.get(`user/count/`)
             ]);
-            const filteredPosts = response_post.data.results.filter(post => {
-                const status = post.status.toLowerCase()
-                return status !== "draft" && status !== "disabled" && status !== "پیش‌ نویس" && status !== "غیرفعال"
-            })
-            setPosts(filteredPosts)
+            let filteredPosts = [];
+            if (response_post.data && response_post.data.results) {
+                filteredPosts = response_post.data.results.filter(post => {
+                    const status = post.status.toLowerCase()
+                    return status !== "draft" && status !== "disabled" && status !== "پیش‌ نویس" && status !== "غیرفعال"
+                })
+                setPosts(filteredPosts)
+            } else {
+                console.error("Invalid posts response format:", response_post.data);
+            }
             // setActivePostCount(filteredPosts.length)
             // Calculate filtered post counts per category
             const filteredPostsByCategory = {}

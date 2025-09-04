@@ -18,12 +18,16 @@ function AllPosts() {
             try {
                 const response = await apiInstance.get("post/lists/");
                 // Filter out posts with category title "اخبار"
-                const filteredPosts = response.data.results.filter(post => {
-                    const status = post.status.toLowerCase();
-                    const categoryTitle = post.category?.title || "";
-                    return status !== "draft" && status !== "disabled" && status !== "پیش‌ نویس" && status !== "غیرفعال" && categoryTitle !== "اخبار";
-                });
-                setPosts(filteredPosts);
+                if (response.data && response.data.results) {
+                    const filteredPosts = response.data.results.filter(post => {
+                        const status = post.status.toLowerCase();
+                        const categoryTitle = post.category?.title || "";
+                        return status !== "draft" && status !== "disabled" && status !== "پیش‌ نویس" && status !== "غیرفعال" && categoryTitle !== "اخبار";
+                    });
+                    setPosts(filteredPosts);
+                } else {
+                    console.error("Invalid response format:", response.data);
+                }
             } catch (error) {
                 console.error("Failed to fetch posts:", error);
             }
